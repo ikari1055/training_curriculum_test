@@ -33,8 +33,11 @@ class CalendarsController < ApplicationController
         today_plans.push(plan.plan) if plan.date == @todays_date + x
       end
       current_date = @todays_date + x
-      wday = wdays[current_date.wday]  # 曜日を取得
-      days = { month: current_date.month, date: current_date.day, wday: wday, plans: today_plans }
+      wday_num = current_date.wday
+      if wday_num >= 7
+        wday_num = wday_num - 7
+      end
+      days = { month: current_date.month, date: current_date.day, plans: today_plans, wday: wdays[wday_num] }
       @week_days.push(days)
     end
   end
